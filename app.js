@@ -26,6 +26,12 @@ app.get("/", async function (req, res) {
     writes,
   });
 });
+app.get("/posts/:id", async function (req, res) {
+  const Write = await Writes.findById(req.params.id);
+  res.render("post", {
+    Write,
+  });
+});
 app.get("/add_post", function (req, res) {
   res.render("add_post");
 });

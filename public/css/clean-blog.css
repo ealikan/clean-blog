@@ -270,6 +270,7 @@ header.masthead .post-heading .meta a {
 
 .post-preview > a {
   color: #212529;
+ 
 }
 
 .post-preview > a:focus, .post-preview > a:hover {
@@ -281,6 +282,8 @@ header.masthead .post-heading .meta a {
   font-size: 30px;
   margin-top: 30px;
   margin-bottom: 10px;
+  
+ 
 }
 
 .post-preview > a > .post-subtitle {

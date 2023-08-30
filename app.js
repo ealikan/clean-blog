@@ -5,16 +5,26 @@ const mongoose = require("mongoose");
 const Writes = require("./models/writings");
 var methodOverride = require("method-override");
 const { HTTPMethod } = require("http-method-enum");
-const pageController = require("./controllers/pageController")
-const postController = require("./controllers/postController")
+const pageController = require("./controllers/pageController");
+const postController = require("./controllers/postController");
 
 const app = express();
 
 //connect DB
-mongoose.connect("mongodb://127.0.0.1:27017/clean-blog-db", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose
+  .connect(
+    "mongodb+srv://ethemmfiratalikan:Df78v5b5.@cluster0.silihvv.mongodb.net/clean-blog?retryWrites=true&w=majority",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    },
+  )
+  .then(() => {
+    console.log("dbconnected!");
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 //Template engine
 app.set("view engine", "ejs");
@@ -34,7 +44,7 @@ app.use(
   }),
 );
 
-app.get("/",pageController.homeController);
+app.get("/", pageController.homeController);
 app.get("/posts/:id", pageController.postPageController);
 app.get("/add_post", function (req, res) {
   res.render("add_post");
@@ -50,4 +60,8 @@ app.put("/writes/edit/:id", postController.editPageSend);
 
 app.delete("/writes/:id", postController.deletePage);
 
-app.listen(3000);
+const port = process.env.PORT || 5000;
+
+app.listen(port, () => {
+  console.log(`sunucu ${port} portunda başlatıldı`);
+});

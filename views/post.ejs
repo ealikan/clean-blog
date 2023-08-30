@@ -12,8 +12,8 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="post-heading">
-            <%= Write.message %>
-            <p>Posted by <%= Write.name %> on <%= Write.dateCreated %></p>
+            <%= write.message %>
+            <p>Posted by <%= write.name %> on <%= write.dateCreated %></p>
 
           </div>
         </div>
@@ -28,10 +28,10 @@
         <div class="col-lg-8 col-md-10 mx-auto">
           
 
-          <h2 class="section-heading"><%= Write.message %></h2>
+          <h2 class="section-heading"><%= write.message %></h2>
 
         
-          <p>Posted by <%= Write.name %> on <%= Write.dateCreated %></p>
+          <p>Posted by <%= write.name %> on <%= write.dateCreated %></p>
 
         
 
@@ -41,6 +41,15 @@
       </div>
     </div>
   </article>
+
+  <div class="tm-bg-gray tm-share-box">
+    <div class="text-center">
+      <a href="/writes/<%= write._id %>" class="btn btn-primary p-0 mb-4 tm-btn-animate tm-btn-download tm-icon-download"><span>Update Details</span></a>	
+    </div>	
+    <div class="text-center">
+      <a href="/writes/<%= write._id %>?_method=delete" class="btn btn-danger p-0 tm-btn-animate tm-btn-download tm-icon-download" onclick="return confirm('emin misiniz?')"><span>Delete Photo</span></a>	
+    </div>								
+  </div>
 
   <hr>
 

@@ -3,6 +3,10 @@ const ejs = require("ejs");
 const path = require("path");
 const mongoose = require("mongoose");
 const Writes = require("./models/writings");
+var methodOverride = require("method-override");
+const { HTTPMethod } = require("http-method-enum");
+const pageController = require("./controllers/pageController")
+const postController = require("./controllers/postController")
 
 const app = express();
 
@@ -19,28 +23,31 @@ app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(
+  methodOverride("_method", {
+    methods: [
+      HTTPMethod.POST,
+      HTTPMethod.GET,
+      HTTPMethod.PUT,
+      HTTPMethod.DELETE,
+    ],
+  }),
+);
 
-app.get("/", async function (req, res) {
-  const writes = await Writes.find({}).sort({ dateCreated: -1 });
-  res.render("index", {
-    writes,
-  });
-});
-app.get("/posts/:id", async function (req, res) {
-  const Write = await Writes.findById(req.params.id);
-  res.render("post", {
-    Write,
-  });
-});
+app.get("/",pageController.homeController);
+app.get("/posts/:id", pageController.postPageController);
 app.get("/add_post", function (req, res) {
   res.render("add_post");
 });
 app.get("/about", function (req, res) {
   res.render("about");
 });
-app.post("/writes", async function (req, res) {
-  await Writes.create(req.body);
-  res.redirect("/");
-});
+app.post("/writes", postController.postCreate);
+
+app.get("/writes/:id", postController.editPage);
+
+app.put("/writes/edit/:id", postController.editPageSend);
+
+app.delete("/writes/:id", postController.deletePage);
 
 app.listen(3000);
